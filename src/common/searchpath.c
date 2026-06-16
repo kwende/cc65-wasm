@@ -49,7 +49,9 @@
 #  ifndef PATH_MAX
 #  define PATH_MAX 4096
 #  endif
-#  include "cmdline.h"
+#  if !defined(__EMSCRIPTEN__)
+#    include "cmdline.h"
+#  endif
 #endif
 
 /* common */
@@ -167,7 +169,7 @@ void AddSubSearchPathFromEnv (SearchPaths* P, const char* EnvVar, const char* Su
 #define PATHSEP "\\"
 #undef PATH_MAX
 #define PATH_MAX _MAX_PATH
-#else
+#elif !defined(__EMSCRIPTEN__)
 #define PATHSEP "/"
 
 
@@ -271,6 +273,11 @@ void AddSubSearchPathFromBin (SearchPaths* P, const char* SubDir)
 ** another exception below.
 */
 {
+#if defined(__EMSCRIPTEN__)
+    (void) P;
+    (void) SubDir;
+    return;
+#else
     char* Ptr;
     char Dir[PATH_MAX];
 
@@ -307,6 +314,7 @@ void AddSubSearchPathFromBin (SearchPaths* P, const char* SubDir)
 
     /* Add the search path */
     AddSearchPath (P, Dir);
+#endif
 }
 
 

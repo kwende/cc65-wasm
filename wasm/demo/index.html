@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>cc65 wasm demo</title>
+    <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+    <main class="app-shell">
+        <header class="topbar">
+            <div>
+                <h1>cc65 wasm demo</h1>
+                <p>ca65 + ld65 in browser MEMFS</p>
+            </div>
+            <div class="actions">
+                <button id="buildButton" type="button">Assemble</button>
+                <button id="downloadButton" type="button" disabled>Download</button>
+            </div>
+        </header>
+
+        <section class="workspace" aria-label="Assembler workspace">
+            <div class="editor-pane">
+                <div class="pane-header">
+                    <label for="sourceInput">6502 source</label>
+                    <input id="ca65Flags" type="text" spellcheck="false" value="--cpu 6502">
+                </div>
+                <textarea id="sourceInput" spellcheck="false"></textarea>
+            </div>
+
+            <div class="editor-pane">
+                <div class="pane-header">
+                    <label for="linkerInput">ld65 config</label>
+                    <input id="ld65Flags" type="text" spellcheck="false" value="">
+                </div>
+                <textarea id="linkerInput" spellcheck="false"></textarea>
+            </div>
+        </section>
+
+        <section class="results" aria-label="Assembly result">
+            <div class="result-meta">
+                <span id="statusText">Idle</span>
+                <span id="sizeText">0 bytes</span>
+            </div>
+            <pre id="hexOutput" aria-label="Output bytes"></pre>
+            <pre id="diagnostics" aria-label="Diagnostics"></pre>
+        </section>
+    </main>
+
+    <script type="module" src="./app.js"></script>
+</body>
+</html>
